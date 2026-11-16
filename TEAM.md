@@ -11,10 +11,10 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-|   1 | Nguyễn Thế Trường | 2A202603393 | 26ai.truongnt2@vinuni.edu.vn | https://github.com/Nguyen-The-Truong | TV1 — Workflow + Integration |
-|   2 |        |      |       |        |         |
-|   3 |        |      |       |        |         |
-|   4 |        |      |       |        |         |
+|   1 |   Đặng Long Nhật     | 2A202603483     |   nhatlong12cc@gmail.com    |     Nhatlong2   |     orchestrator + handoff     |
+|   2 |   Nguyễn Vũ Khanh     |  2A202603427    |       |        |       Ledger + Evaluation  |
+|   3 |    Nguyễn Thế Trường    |   2A202603393   | 26ai.truongnt2@vinuni.edu.vn | https://github.com/Nguyen-The-Truong |   Workflow + Integration      |
+|   4 |     Bùi Ngọc Vũ   | 2A202603463     |       |        |    Single agent     |
 
 Gợi ý chia vai:
 
