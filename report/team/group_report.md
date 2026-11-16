@@ -72,9 +72,6 @@ Lỗi gặp phải (kèm lệnh, output hoặc ảnh chụp) và cách nhóm x�
    - *Vấn đề*: Khi hệ thống gặp sự cố mất điện/crash tại các thời điểm nhạy cảm (như ngay sau khi ghi tiền vào Ledger nhưng chưa kịp lưu checkpoint, hoặc trước khi ghi hiệu ứng), việc chạy lại (retry/resume) có nguy cơ gây ra lỗi ghi trùng tiền (double refund), vi phạm nghiêm trọng nguyên tắc kế toán tài chính.
    - *Cách xử lý*: Nhóm triển khai cơ chế Idempotency dựa trên khóa duy nhất `refund:{claim_id}` trong SQLite với transaction `BEGIN IMMEDIATE`. Khi phát hiện claim đã được xử lý thành công trước đó, host lập tức trả về kết quả đã ghi nhận thay vì thực thi lại. Kiểm thử toàn diện qua Crash Suite 20/20 (`python -m lab8.crash_test --count 20 --out reports/crash.json`) đã chứng minh hệ thống an toàn tuyệt đối, đạt `crash_safety = 20/20`, không có bất kỳ giao dịch nào bị nhân đôi.
 
-3. **Bẫy nghiệp vụ trần hoàn tiền theo đơn hàng (Per-order Cap)**:
-   - *Vấn đề*: Một số claim phức tạp (như ca T13, T14) có đơn hàng đã từng được hoàn tiền một phần trước đó. Nếu Agent hoặc Workflow tự ý tính toán và trừ bớt số tiền đã hoàn trước khi gửi sang Host, hoặc ngược lại bỏ qua lịch sử hoàn tiền, sẽ dẫn tới việc trừ hai lần (double deduction) hoặc vượt quá tổng giá trị đơn hàng.
-   - *Cách xử lý*: Nhóm tuân thủ đúng hợp đồng kiến trúc: các shape luôn gửi **quote bồi thường đầy đủ** (tính theo công thức chuẩn của vi phạm) sang cho Host. Trách nhiệm kiểm tra lịch sử hoàn tiền, đối chiếu trần đơn hàng và quyết định số tiền thực chi cuối cùng thuộc về Host Authorization Gate. Nhờ đó, cả 4 shape đều xử lý chính xác tuyệt đối các ca biên này.
 
 ## 6. Tổng hợp đóng góp
 

@@ -55,14 +55,8 @@ TV4 — Ledger + Evaluation:
 
 ## 5. Công cụ AI đã dùng
 
-**Antigravity (Google DeepMind)**, sử dụng vào các công việc:
+**Antigravity**, sử dụng vào các công việc:
 - Hỗ trợ xây dựng kịch bản kiểm thử chuyên sâu trong `src/tests/test_durability_extra.py` theo đúng chuẩn pytest.
-- Hỗ trợ thực thi tự động các script benchmark, crash test và rà quét trace contract qua terminal.
-- Hỗ trợ trích xuất số liệu JSON từ các báo cáo định lượng để lập bảng so sánh và phân tích đối chiếu cho `decision_adr.md` và `group_report.md`.
-
-*Quy trình tự kiểm tra, xác thực kết quả*:
-- Toàn bộ kết quả thực nghiệm và số liệu trong báo cáo đều được đối chiếu trực tiếp từ file JSON do công cụ gốc của BTC sinh ra (`src/reports/benchmark.json`, `src/reports/crash.json`), tuyệt đối không bịa đặt hay điều chỉnh số liệu thủ công.
-- Tự tay thực thi lại các lệnh CLI kiểm chứng trên terminal và đọc trực tiếp cơ sở dữ liệu SQLite để xác nhận số dòng trong bảng ledger và audit.
 
 ## 6. Tự đánh giá
 
