@@ -23,7 +23,9 @@ Nếu pass nhỉnh hơn mà cost và variance cao hơn, nhóm giữ hay đổi? 
 
 ## Trace và bằng chứng
 
-Trace của nhóm ghi những event nào? Field nào cố ý **không** ghi, và vì sao? Nếu trace nằm ngoài chỗ scanner quét được, đội security chứng minh thế nào là hệ thống không lộ secret?
+Shape C ghi trace tại `RunResult.trace_path`. JSON có `run_id` khớp kết quả và danh sách `events`. `handoff` chỉ ghi payload đã qua `make_handoff()`, trong đó investigator được cấp `lookup_order`. `investigator` ghi tên tool và cờ `visible`. `quote`, `host` và `decision` ghi số tiền đề xuất, kết quả kiểm tra và mã lý do nghiệp vụ. Các nhánh kết thúc sớm dùng cùng `finish()` để ghi trace trong lần chạy hiện tại.
+
+Shape C giữ ticket, claim/order thô, header, `parent_secret`, số điện thoại, địa chỉ, ghi chú nội bộ và tên hàng ngoài trace. Shape ghi một file trace trong thư mục `src/traces/` để scanner nhận diện qua `trace_path` và `run_id`. Test `test_orchestrator_handoff_is_read_only_and_trace_is_safe` đối chiếu payload bàn giao thực tế với event `handoff` và rà dữ liệu nhạy cảm trong trace, kết quả và dữ liệu in ra terminal.
 
 ## Giới hạn
 
