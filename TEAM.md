@@ -24,6 +24,7 @@
 | Người | Vai | Commit | Test đã thêm hoặc sửa |
 | --- | --- | --- | --- |
 | Nguyễn Thế Trường | Workflow + Integration | `d473a3e` — shape A `src/lab8/shapes/workflow.py` | `src/tests/test_workflow_extra.py` (104 test case) |
+| Đặng Long Nhật | Orchestrator + Handoff | `a56d25e` — Shape C | `src/tests/test_orchestrator_handoff.py` (2 ca) |
 
 ## Cá nhân
 
