@@ -12,9 +12,9 @@
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
 |   1 |   Đặng Long Nhật     | 2A202603483     |   nhatlong12cc@gmail.com    |     Nhatlong2   |     orchestrator + handoff     |
-|   2 |   Nguyễn Vũ Khanh     |  2A202603427    |       |        |         |
-|   3 |    Nguyễn Thế Trường    |   2A202603393   |       |        |         |
-|   4 |     Bùi Ngọc Vũ   | 2A202603463     |       |        |         |
+|   2 |   Nguyễn Vũ Khanh     |  2A202603427    |       |        |       Ledger + Evaluation  |
+|   3 |    Nguyễn Thế Trường    |   2A202603393   |       |        |   Workflow + Integration      |
+|   4 |     Bùi Ngọc Vũ   | 2A202603463     |       |        |    Single agent     |
 
 Gợi ý chia vai:
 
