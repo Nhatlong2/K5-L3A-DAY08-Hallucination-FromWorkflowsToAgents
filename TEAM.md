@@ -5,7 +5,7 @@
 - Tên nhóm: Hallucination
 - Lớp: L3A
 - Repo nhóm: `K5-L3A-DAY08-Hallucination-FromWorkflowsToAgents`
-- URL repo, nhánh nộp, commit chốt:
+- URL repo, nhánh nộp, commit chốt: [Hallucination](https://github.com/Nhatlong2/K5-L3A-DAY08-Hallucination-FromWorkflowsToAgents), `main`, `680d725`.
 
 ## Thành viên
 
@@ -25,7 +25,7 @@
 | --- | --- | --- | --- |
 | Nguyễn Thế Trường | Workflow + Integration | `d473a3e` — shape A `src/lab8/shapes/workflow.py` | `src/tests/test_workflow_extra.py` (104 test case) |
 | Nguyễn Vũ Khanh | Ledger + Evaluation | `234438c` | `src/tests/test_durability_extra.py` (5 test case) |
-| Đặng Long Nhật | Orchestrator + Handoff | `a56d25e` — Shape C | `src/tests/test_orchestrator_handoff.py` (2 ca) |
+| Đặng Long Nhật | Orchestrator + Handoff | `a56d25e` — Shape C, `0020613` — test | `src/tests/test_orchestrator_handoff.py` (2 ca) |
 | Bùi Ngọc Vũ | Single agent | `04184a3` — shape B `src/lab8/shapes/single.py` | `src/tests/test_single_extra.py` (34 test case) |
 
 

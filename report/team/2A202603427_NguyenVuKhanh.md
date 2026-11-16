@@ -13,45 +13,44 @@ TV4 — Ledger + Evaluation:
 - Phụ trách kiểm thử tính bền vững (durability), cơ chế đảm bảo Idempotency của hệ thống Ledger.
 - Thiết kế và triển khai bộ test chuyên sâu `src/tests/test_durability_extra.py` kiểm tra crash resilience, chống ghi trùng tiền bồi thường (double refund), và xác thực các điều kiện biên của Host Authorization Gate.
 - Đo lường và nghiệm thu Crash Suite 20/20 kịch bản tiêm lỗi crash (`lab8.crash_test`).
-- Rà soát bảo mật toàn diện: quét 272 trace files phòng chống rò rỉ thông tin bí mật (`CANARY_SECRET_*`), token và PII theo Trace Contract v1.
+- Rà soát trace public theo Trace Contract v1 để phát hiện marker secret, token và thông tin cá nhân của fixture.
 - Chạy đo lường Benchmark toàn phần 4 shapes × 5 seeds trên 14 claims public (`src/reports/benchmark.json`).
-- Tự kiểm tra độc lập trên bộ dữ liệu kiểm thử ẩn (`src/student_drop/`) đạt kết quả tin cậy (`src/reports/hidden_selfcheck.json`).
+- Tự kiểm trên bộ hidden không nhãn từ `src/student_drop/` và ghi kết quả vận hành vào `src/reports/hidden_selfcheck.json`.
 - Soạn thảo và hoàn thiện Architectural Decision Record (`report/team/decision_adr.md`) và phụ trách các phần số liệu thực nghiệm trong Báo cáo nhóm (`report/team/group_report.md`).
 
 ## 3. Đóng góp cụ thể
 
-- Commit chính: `234438c` ("test(durability): add comprehensive durability and idempotency tests"), bổ sung bộ kiểm thử `src/tests/test_durability_extra.py` gồm 5 test cases bao phủ toàn diện:
-  1. `test_retry_same_claim_is_strictly_idempotent`: Gọi lại cùng một claim đã giải quyết thành công nhiều lần, đảm bảo Ledger chỉ ghi đúng 1 bản ghi và audit chỉ có 1 `refund_committed`.
-  2. `test_crash_resume_cycle_maintains_single_ledger_row`: Mô phỏng quy trình crash tại điểm nhạy cảm `after_effect_before_checkpoint` rồi phục hồi (resume) chạy lại trên database đó, xác nhận hiệu ứng chỉ được cam kết một lần duy nhất.
-  3. `test_denied_claim_never_writes_to_ledger`: Đảm bảo claim bị từ chối chính sách (policy denied) hoặc thiếu approval hợp lệ tuyệt đối không sinh ra bất kỳ giao dịch nào trong Ledger.
-  4. `test_per_order_cap_enforcement_in_host_gate`: Kiểm tra cơ chế Host Authorization Gate ngăn chặn việc vượt trần bồi thường theo đơn hàng (áp dụng cho các ca T13, T14).
-  5. `test_trace_contract_v1_compliance_and_sanitization`: Xác thực cấu trúc trace JSON và quét tự động các chuỗi nhạy cảm (`CANARY_SECRET`, token, phone, address).
+- Commit `234438c` bổ sung năm test trong `src/tests/test_durability_extra.py`.
+  1. `test_idempotency_same_claim_twice` kiểm tra retry giữ một refund và một audit `refund_committed`.
+  2. `test_idempotency_retry_different_amount_conflicts` kiểm tra retry với số tiền khác báo xung đột và giữ effect đã ghi.
+  3. `test_approval_mismatch_denied` kiểm tra approval của claim khác bị từ chối.
+  4. `test_approval_missing_revoked_expired_and_non_positive` kiểm tra approval thiếu, bị thu hồi, hết hạn hoặc số tiền không dương.
+  5. `test_order_cap_partial_and_exhausted_refund` kiểm tra trả phần chênh lệch trong trần và từ chối khi trần đã hết.
 - Tạo lập các bộ báo cáo định lượng chuẩn xác bằng công cụ của lab:
-  - `src/reports/crash.json`: Sinh ra từ lệnh `python -m lab8.crash_test --count 20 --out reports/crash.json`, đạt chỉ số an toàn tuyệt đối `20/20`.
+  - `src/reports/crash.json` ghi kết quả đạt `20/20` kịch bản từ `lab8.crash_test`.
   - `src/reports/benchmark.json`: Sinh ra từ lệnh `python -m lab8.benchmark --shapes workflow,single,orchestrator,swarm --cases data/public_claims.jsonl --seeds 11,22,33,44,55 --out reports/benchmark.json`, bao phủ 280 trials.
-  - `src/reports/hidden_selfcheck.json`: Sinh ra từ đợt tự kiểm tra bộ hidden test drop (`student_drop/`), ghi nhận 600 trials không phát sinh lỗi (`error: 0`) và không có nghi vấn rò rỉ (`leak_suspect: 0`).
+  - `src/reports/hidden_selfcheck.json` ghi kết quả tự kiểm 600 trial không nhãn. Điểm hidden chính thức do grader của giảng viên xác định.
 - Quyết định kỹ thuật:
-  - Kiên quyết đề xuất lựa chọn kiến trúc **Workflow (Shape A)** trong ADR dựa trên tiêu chí "ít tự chủ nhất mà vẫn làm được việc": chi phí rẻ nhất (28.79 VND), phương sai bằng 0, loại bỏ hoàn toàn nguy cơ ảo giác (hallucination) so với Single Agent (+37.3% chi phí) và Swarm (trượt seed 55 do ảo giác).
+  - Đề xuất **Workflow (Shape A)** trong ADR vì đạt `70/70` trial public với phương sai bằng 0 và chi phí mô phỏng thấp nhất `28.79 VND/success`.
   - Khẳng định tính an toàn của Ledger dựa trên SQLite transaction `BEGIN IMMEDIATE` và khóa duy nhất `refund:{claim_id}`.
 
 ## 4. Bằng chứng
 
 - **Kết quả Unit Test Durability**:
-  - `python -m pytest -q tests/test_durability_extra.py -o addopts=`: **5 passed in 0.45s**.
+  - `python -m pytest -q tests/test_durability_extra.py -o addopts=` đạt **5 ca**.
 - **Kết quả Kiểm tra Ma trận Sinh viên**:
   - `python -m pytest -q -m student -o addopts=`: **248 passed, 199 deselected** (100% test của nhóm xanh hoàn toàn).
 - **Crash Safety 20/20**:
-  - `python -m lab8.crash_test --count 20 --out reports/crash.json`:
-    `{"crash_safety": "20/20", "total_scenarios": 20, "passed": 20, "failed": 0}`.
+  - `python -m lab8.crash_test --count 20 --out reports/crash.json` sinh báo cáo với `count=20`, `passed=20` và `crash_safety="20/20"`.
 - **Số liệu Benchmark Toàn phần** (trích xuất từ `src/reports/benchmark.json`):
   - `workflow`: Pass rate **1.000**, Pass^5 **1.000**, Variance **0.000000**, Cost/success **28.79 VND**, Mean Steps **2.71**.
   - `orchestrator`: Pass rate **1.000**, Pass^5 **1.000**, Variance **0.000000**, Cost/success **38.06 VND**, Mean Steps **4.36**.
   - `single`: Pass rate **1.000**, Pass^5 **1.000**, Variance **0.000000**, Cost/success **39.54 VND**, Mean Steps **8.21**.
   - `swarm`: Pass rate **0.986**, Pass^5 **0.929**, Variance **0.000816**, Cost/success **49.57 VND**, Mean Steps **2.80**.
 - **An toàn Bảo mật & Trace**:
-  - Quét 272 file trace trong `src/traces/`: 0 secret leak (`CANARY_SECRET_*`), 0 authorization bypass, 0 PII leak.
+  - Lượt đối chiếu bản nộp quét 280 trace public và ghi nhận 0 trace chứa marker hoặc giá trị nhạy cảm của fixture. Kết quả kiểm tra approval của Workflow được ghi riêng trong ADR. [Báo cáo nhóm](group_report.md) · [ADR](decision_adr.md)
 - **Tự kiểm tra Hidden Test**:
-  - `src/reports/hidden_selfcheck.json`: 600 trials, `error_count: 0`, `leak_suspect: 0`.
+  - `src/reports/hidden_selfcheck.json` ghi 600 trial không nhãn, tổng `graded_trials=0`, `error_trials=0` và `leak_suspect_trials=0`.
 
 ## 5. Công cụ AI đã dùng
 
