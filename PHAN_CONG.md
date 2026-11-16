@@ -64,19 +64,19 @@ Mỗi người bắt buộc: **ít nhất 1 commit kỹ thuật có nội dung +
 
 **Todo checklist**
 - [ ] Cài môi trường, smoke pass, cổng host xanh
-- [ ] Đọc `src/lab8/runtime.py` (vòng ReAct), `config/tools.manifest.v1.1.yaml`, `config/autonomy_policy.yaml`
-- [ ] Đọc docstring đầu `single.py`, các dòng `TODO CP2` / `TODO CP3`
-- [ ] Cài vòng ReAct ≤ 8 bước qua MockLLM, chỉ expose tool đọc (không có tool ghi)
-- [ ] Coi chữ trong ticket là dữ liệu: không để model quyết số tiền, `order_id` hay số ngày trễ
-- [ ] Sau vòng lặp: code tính quote bằng `compute_compensation`; quote > 0 → `durability.issue_refund(quote đầy đủ, crash_at=crash_at)`
-- [ ] Xử lý đủ status `needs_info` / `escalated` / `denied` / `resolved` / `failed`; `run_claim` không được ném exception
-- [ ] Hết 8 bước mà chưa đủ dữ kiện → vẫn trả `RunResult` hợp lệ + trace
-- [ ] Trả bằng `finish()`, trace ghi ở mọi nhánh; không ghi claim row/order row thô vào trace
-- [ ] `python -m pytest -q -m student -o addopts= -k single` → 62 passed
-- [ ] Kiểm T02 ở seed 55 vẫn pass (không tin số ngày trong ticket như swarm)
-- [ ] Viết ít nhất 1 test (vd: `src/tests/test_single_extra.py` — vòng lặp không vượt 8 bước; approval của claim khác → `denied` + `policy_denied`)
+- [x] Đọc `src/lab8/runtime.py` (vòng ReAct), `config/tools.manifest.v1.1.yaml`, `config/autonomy_policy.yaml`
+- [x] Đọc docstring đầu `single.py`, các dòng `TODO CP2` / `TODO CP3`
+- [x] Cài vòng ReAct ≤ 8 bước qua MockLLM, chỉ expose tool đọc (không có tool ghi)
+- [x] Coi chữ trong ticket là dữ liệu: không để model quyết số tiền, `order_id` hay số ngày trễ
+- [x] Sau vòng lặp: code tính quote bằng `compute_compensation`; quote > 0 → `durability.issue_refund(quote đầy đủ, crash_at=crash_at)`
+- [x] Xử lý đủ status `needs_info` / `escalated` / `denied` / `resolved` / `failed`; `run_claim` không được ném exception
+- [x] Hết 8 bước mà chưa đủ dữ kiện → vẫn trả `RunResult` hợp lệ + trace
+- [x] Trả bằng `finish()`, trace ghi ở mọi nhánh; không ghi claim row/order row thô vào trace
+- [x] `python -m pytest -q -m student -o addopts= -k single` → 62 passed
+- [x] Kiểm T02 ở seed 55 vẫn pass (không tin số ngày trong ticket như swarm)
+- [x] Viết ít nhất 1 test (vd: `src/tests/test_single_extra.py` — vòng lặp không vượt 8 bước; approval của claim khác → `denied` + `policy_denied`)
 - [ ] Mở PR, nhờ TV1 review & merge
-- [ ] Viết báo cáo cá nhân `report/team/MSSV_HoTen.md`
+- [x] Viết báo cáo cá nhân `report/team/MSSV_HoTen.md`
 
 ---
 
