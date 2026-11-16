@@ -26,8 +26,7 @@ TV3 phụ trách Shape C `orchestrator`, investigator chỉ đọc, handoff theo
 
 ## 5. Công cụ AI đã dùng
 
-Codex hỗ trợ triển khai bản nháp, viết test và chạy các lệnh kiểm chứng trên. TV3 cần tự chạy lại test Shape C và đối chiếu trace với ledger trước khi chốt báo cáo.
-
+Codex hỗ trợ viết test và chạy các lệnh kiểm chứng trên.
 ## 6. Tự đánh giá
 
 TV3 bổ sung phần tự đánh giá sau khi tự kiểm tra kết quả.
