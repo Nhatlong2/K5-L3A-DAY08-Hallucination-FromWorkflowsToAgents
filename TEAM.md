@@ -11,7 +11,7 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-|   1 |   Đặng Long Nhật     | 2A202603483     |   nhatlong12cc@gmail.com    |     Nhatlong2   |     orchestrator + handoff     |
+|   1 |   Đặng Long Nhật     | 2A202603483     |   nhatlong12cc@gmail.com    |     [Nhatlong2](https://github.com/Nhatlong2)   |     orchestrator + handoff     |
 |   2 |   Nguyễn Vũ Khanh     |  2A202603427    | vukhanhkg2005@gmail.com | https://github.com/vukhanhkg2005-lang |       Ledger + Evaluation  |
 |   3 |    Nguyễn Thế Trường    |   2A202603393   | 26ai.truongnt2@vinuni.edu.vn | https://github.com/Nguyen-The-Truong |   Workflow + Integration      |
 |   4 |     Bùi Ngọc Vũ   | 2A202603463     | 26ai.vubn@vinuni.edu.vn | https://github.com/bngcVu |    Single agent     |
@@ -25,9 +25,7 @@
 | --- | --- | --- | --- |
 | Nguyễn Thế Trường | Workflow + Integration | `d473a3e` — shape A `src/lab8/shapes/workflow.py` | `src/tests/test_workflow_extra.py` (104 test case) |
 | Nguyễn Vũ Khanh | Ledger + Evaluation | `234438c` | `src/tests/test_durability_extra.py` (5 test case) |
-
 | Đặng Long Nhật | Orchestrator + Handoff | `a56d25e` — Shape C | `src/tests/test_orchestrator_handoff.py` (2 ca) |
-
 | Bùi Ngọc Vũ | Single agent | `04184a3` — shape B `src/lab8/shapes/single.py` | `src/tests/test_single_extra.py` (34 test case) |
 
 
