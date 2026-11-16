@@ -13,7 +13,7 @@ TV1 — Workflow: viết shape A `src/lab8/shapes/workflow.py` và test bổ sun
 
 ## 3. Đóng góp cụ thể
 
-- Commit chính: (điền hash sau khi commit)
+- Commit chính: `d473a3e` ("commit workflow"): `workflow.py`, `test_workflow_extra.py`, `TEAM.md`, báo cáo cá nhân; đã gộp vào `main` ở `daa8d46`
 - Shape `workflow`: các bước cố định. Đọc claim qua `get_claim_view`, kiểm `order_id` thiếu thì `needs_info`, `lookup_order` không thấy thì `escalated`, quote bằng `compute_compensation`, quote 0 thì `denied` (không gọi host), quote > 0 thì `durability.issue_refund` với quote đầy đủ và `crash_at`.
 - Quyết định kỹ thuật: số ngày trễ và `order_id` chỉ lấy từ DB, không parse từ ticket, nên không có điểm yếu như swarm ở seed chia hết cho 5. Trace chỉ ghi field đã qua allowlist (order view, quote, kết quả host), không ghi ticket hay claim row thô. `InjectedCrash` được flush trace rồi ném lại, không bị bắt.
 - Test thêm: `src/tests/test_workflow_extra.py` (104 test case):
