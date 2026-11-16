@@ -4,8 +4,8 @@
 
 - Họ tên: Đặng Long Nhật
 - MSSV: 2A202603483
+- Email: nhatlong12cc@gmail.com
 - GitHub: [Nhatlong2](https://github.com/Nhatlong2)
-- Email: xem `TEAM.md`
 
 ## 2. Phần việc phụ trách
 
