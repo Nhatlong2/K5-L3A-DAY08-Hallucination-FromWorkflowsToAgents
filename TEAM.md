@@ -26,7 +26,7 @@
 | Nguyễn Thế Trường | Workflow + Integration | `d473a3e` — shape A `src/lab8/shapes/workflow.py` | `src/tests/test_workflow_extra.py` (104 test case) |
 
 | Đặng Long Nhật | Orchestrator + Handoff | `a56d25e` — Shape C | `src/tests/test_orchestrator_handoff.py` (2 ca) |
-=======
+
 | Bùi Ngọc Vũ | Single agent | `04184a3` — shape B `src/lab8/shapes/single.py` | `src/tests/test_single_extra.py` (34 test case) |
 
 
