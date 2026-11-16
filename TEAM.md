@@ -11,7 +11,7 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-|   1 |   Đặng Long Nhật     | 2A202603483     |   nhatlong12cc@gmail.com    |     Nhatlong2   |     orchestrator + handoff     |
+|   1 |   Đặng Long Nhật     | 2A202603483     |   nhatlong12cc@gmail.com    |     [Nhatlong2](https://github.com/Nhatlong2)   |     orchestrator + handoff     |
 |   2 |   Nguyễn Vũ Khanh     |  2A202603427    | vukhanhkg2005@gmail.com | https://github.com/vukhanhkg2005-lang |       Ledger + Evaluation  |
 |   3 |    Nguyễn Thế Trường    |   2A202603393   | 26ai.truongnt2@vinuni.edu.vn | https://github.com/Nguyen-The-Truong |   Workflow + Integration      |
 |   4 |     Bùi Ngọc Vũ   | 2A202603463     | 26ai.vubn@vinuni.edu.vn | https://github.com/bngcVu |    Single agent     |
