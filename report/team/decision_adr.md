@@ -4,26 +4,22 @@
 `Shape chọn` phải là đúng một trong: `workflow`, `single`, `orchestrator`, `swarm`. Đây là shape được chấm cổng hidden.
 
 - Shape chọn: workflow
-- Commit hash: 9b5711a
+- Commit hash: 680d725
 - Run id dẫn chứng: R-workflow-C-001-s11
 - Pass rate / pass^5 / seed min-max / variance: 1.000 / 1.000 / 1.000 - 1.000 / 0.000000
 - Cost per success (mô phỏng, VND): 28.79
 - Crash safety: 20/20 (src/reports/crash.json)
-- Secret leak / approval bypass: 0 / 0
+- Secret leak / approval bypass: 0 / 0 (Workflow, bộ public)
 
 Ví dụ một dòng đã điền: `- Shape chọn: workflow`, `- Crash safety: 20/20 (src/reports/crash.json)`.
 
 ## Vì sao shape này
 
-Viết 1 đoạn. So cùng corpus và cùng seed, không so với một lần chạy lẻ.
-
-Nhóm chọn kiến trúc `workflow` (Shape A) dựa trên tiêu chí cốt lõi: "Chọn kiến trúc ít tự chủ nhất mà vẫn làm được việc". Trong bài toán xử lý claim hoàn phí của LogiX-VN, các luật nghiệp vụ (policy) về tính phí bồi thường, thời hạn hợp lệ và trần đơn hàng đều cố định, rõ ràng và có tính ràng buộc pháp lý/tài chính chặt chẽ. Việc sử dụng luồng code Python xác định (deterministic logic qua if/else) cho phép giải quyết chính xác 100% các tình huống mà không cần giao quyền tự chủ cho LLM suy luận, loại bỏ hoàn toàn nguy cơ ảo giác (hallucination). Trên cùng tập corpus public (14 claims × 5 seeds = 70 trials), Workflow đạt Pass rate tuyệt đối 1.000, Pass^5 1.000, Seed Variance 0.000000 và chi phí mô phỏng thấp nhất (28.79 VND/success, rẻ hơn 37.3% so với Single Agent và rẻ hơn 72.2% so với Swarm), đồng thời số bước xử lý ngắn nhất (2.71 steps).
+Nhóm chọn `workflow` (Shape A) theo tiêu chí ít tự chủ nhất mà vẫn đạt yêu cầu. Code xử lý luật hoàn phí, thời hạn hợp lệ và trần theo đơn. MockLLM chỉ soạn phản hồi. Trên cùng 14 claim public và 5 seed, Workflow đạt `70/70`, pass^5 `1.000` và seed variance `0.000000`, với chi phí mô phỏng thấp nhất `28.79 VND/success` và trung bình `2.71` bước. Các số liệu lấy từ `src/reports/benchmark.json`. Run `R-workflow-C-001-s11` là một trial dẫn chứng trong file này.
 
 ## Có đáng đổi lấy multi-agent không
 
-Nếu pass nhỉnh hơn mà cost và variance cao hơn, nhóm giữ hay đổi? Điều kiện nào làm quyết định đảo lại?
-
-Hoàn toàn không đáng đánh đổi trong bài toán này. Thực nghiệm so sánh cùng corpus và cùng seed cho thấy kiến trúc đa tác tử (Swarm) không những làm tăng vọt chi phí lên 49.57 VND/success (+72.2%) và tạo ra phương sai dao động (variance = 0.000816), mà còn làm giảm Pass rate xuống 0.986 do rủi ro khuếch đại lỗi và model override (ở seed 55, Swarm tin vào số ngày trễ người dùng khai trong ticket thay vì dữ liệu thật trong order, dẫn đến tính sai quote và bị host từ chối). Nhóm kiên quyết giữ Workflow. Quyết định chỉ nên đảo ngược sang multi-agent khi bài toán xuất hiện các luồng nghiệp vụ không có cấu trúc cố định, dữ liệu đầu vào đòi hỏi thương lượng đa phương, hoặc cần tổng hợp ngữ nghĩa mở phức tạp từ nhiều nguồn phi cấu trúc mà code tuần tự không thể bao quát.
+Single Agent và Orchestrator cũng đạt `70/70`, với chi phí tương ứng `39.54` và `38.06 VND/success`. Swarm gốc đạt `69/70`, seed variance `0.000816` và chi phí `49.57 VND/success`. Ở `C-002` seed `55`, Swarm dùng số ngày trong ticket để ghi đè số ngày trong order rồi trả `resolved`, trong khi nhãn yêu cầu `denied`. Ablation R2 sửa được ca đó khi dùng `delay_days` từ order. Kết quả ủng hộ việc giữ Workflow cho corpus hiện tại. Nhóm sẽ đánh giá lại khi luồng nghiệp vụ có đầu vào phi cấu trúc hoặc cần phối hợp nhiều bước độc lập, dựa trên mức tăng chất lượng đo được so với chi phí và độ dao động.
 
 ## Trace và bằng chứng
 
@@ -31,8 +27,10 @@ Shape C ghi trace tại `RunResult.trace_path`. JSON có `run_id` khớp kết q
 
 Shape C giữ ticket, claim/order thô, header, `parent_secret`, số điện thoại, địa chỉ, ghi chú nội bộ và tên hàng ngoài trace. Shape ghi một file trace trong thư mục `src/traces/` để scanner nhận diện qua `trace_path` và `run_id`. Test `test_orchestrator_handoff_is_read_only_and_trace_is_safe` đối chiếu payload bàn giao thực tế với event `handoff` và rà dữ liệu nhạy cảm trong trace, kết quả và dữ liệu in ra terminal.
 
-Trace của Workflow ghi nhận minh bạch các sự kiện quan trọng trong vòng đời xử lý claim: `claim_view`, `lookup_order`, `quote` (tính từ `compute_compensation`), `refund_committed` (hoặc `policy_denied`). Các trường nhạy cảm như `parent_secret` (`CANARY_SECRET_*`), `phone`, `address`, `internal_note`, `item_name`, và `raw_headers_json` được cố ý loại bỏ ngay từ tầng đọc dữ liệu (`get_claim_view`, `lookup_order`) theo nguyên tắc allowlist để ngăn ngừa tuyệt đối rò rỉ PII và secret. Nếu trace nằm ngoài vùng scanner tự động, đội security chứng minh bằng chứng thực nghiệm: (1) Kết quả quét tự động 100% file trace sinh ra với `secret_leak_count = 0` và 0 rò rỉ PII; (2) Kết quả Crash Test Suite đạt 20/20 (`src/reports/crash.json`) chứng minh Idempotency Key `refund:{claim_id}` ngăn chặn hoàn toàn việc ghi trùng tiền; (3) Host Authorization Gate luôn đứng giữa để kiểm tra trần đơn hàng và approval hợp lệ trước khi ghi Ledger.
+Trong benchmark public, trace của Workflow ghi các event `order`, `quote`, `host` và `decision` tùy nhánh. `refund_committed` và `policy_denied` là loại sự kiện audit trong SQLite. Workflow xây trace từ dữ liệu allowlist. Ticket thô, `parent_secret`, header, số điện thoại, địa chỉ, ghi chú nội bộ và tên hàng nằm ngoài payload trace.
+
+Lần đối chiếu public kiểm tra 70 kết quả Workflow và trace liên quan, ghi nhận 0 trial chứa marker hoặc giá trị nhạy cảm của fixture. Trong 15 trial Workflow thiếu approval hoặc có approval không hợp lệ, ledger ghi 0 refund. Crash suite đạt `20/20`. Snapshot `680d725` chứa code và hai báo cáo chính. Chạy lại benchmark và crash trên snapshot này cho JSON khớp hoàn toàn với bản đã commit.
 
 ## Giới hạn
 
-MockLLM không phải model sản xuất. Latency để `unavailable`. Không sửa JSON cho đủ 0.75.
+Benchmark đo chi phí mô phỏng với MockLLM và để latency ở `unavailable`. `hidden_selfcheck.json` chỉ là tự kiểm 600 trial không nhãn, với `graded_trials=0`. Điểm hidden chính thức và các chỉ số must-pass trên bộ hidden do grader của giảng viên xác định.

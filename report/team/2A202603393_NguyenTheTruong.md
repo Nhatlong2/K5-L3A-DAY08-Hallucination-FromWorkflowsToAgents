@@ -82,10 +82,9 @@ và nhánh biên; cổng host xanh và tự chạy demo crash rồi resume bằn
 trong khi swarm 0.986 và 0.929 vì tin số ngày trong ticket ở seed 55. Mình cũng chạy
 tự kiểm trên `student_drop/`: 40 claim × 5 seed, không có lỗi hay `leak_suspect`.
 
-**Hiểu được:**hiểu vì sao tiền phải do `compute_compensation` tính chứ không
+**Hiểu được:** Hiểu vì sao tiền phải do `compute_compensation` tính chứ không
 do MockLLM, và vì sao phải truyền quote đầy đủ vào `issue_refund` để host tự trừ
-phần đã hoàn (nếu shape trừ trước thì T14 bị trừ hai lần). [Thêm 1 ý mình thật sự
-hiểu, ví dụ vì sao checkpoint không thay được ledger.]
+phần đã hoàn (nếu shape trừ trước thì T14 bị trừ hai lần).
 
 **Hạn chế:**
 - Số liệu benchmark chỉ trên bộ public (14 claim) và MockLLM nên chi phí và độ ổn
