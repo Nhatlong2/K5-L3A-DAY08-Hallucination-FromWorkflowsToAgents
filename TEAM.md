@@ -16,9 +16,6 @@
 |   3 |    Nguyễn Thế Trường    |   2A202603393   | 26ai.truongnt2@vinuni.edu.vn | https://github.com/Nguyen-The-Truong |   Workflow + Integration      |
 |   4 |     Bùi Ngọc Vũ   | 2A202603463     |       |        |    Single agent     |
 
-Gợi ý chia vai:
-
-- Nhóm 4 người: workflow + integration; single; orchestrator + handoff; ledger + evaluation.
 
 ## Bảng đóng góp
 
