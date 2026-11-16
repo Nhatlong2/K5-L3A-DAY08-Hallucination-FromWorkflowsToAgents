@@ -27,7 +27,9 @@ Hoàn toàn không đáng đánh đổi trong bài toán này. Thực nghiệm s
 
 ## Trace và bằng chứng
 
-Trace của nhóm ghi những event nào? Field nào cố ý **không** ghi, và vì sao? Nếu trace nằm ngoài chỗ scanner quét được, đội security chứng minh thế nào là hệ thống không lộ secret?
+Shape C ghi trace tại `RunResult.trace_path`. JSON có `run_id` khớp kết quả và danh sách `events`. `handoff` chỉ ghi payload đã qua `make_handoff()`, trong đó investigator được cấp `lookup_order`. `investigator` ghi tên tool và cờ `visible`. `quote`, `host` và `decision` ghi số tiền đề xuất, kết quả kiểm tra và mã lý do nghiệp vụ. Các nhánh kết thúc sớm dùng cùng `finish()` để ghi trace trong lần chạy hiện tại.
+
+Shape C giữ ticket, claim/order thô, header, `parent_secret`, số điện thoại, địa chỉ, ghi chú nội bộ và tên hàng ngoài trace. Shape ghi một file trace trong thư mục `src/traces/` để scanner nhận diện qua `trace_path` và `run_id`. Test `test_orchestrator_handoff_is_read_only_and_trace_is_safe` đối chiếu payload bàn giao thực tế với event `handoff` và rà dữ liệu nhạy cảm trong trace, kết quả và dữ liệu in ra terminal.
 
 Trace của Workflow ghi nhận minh bạch các sự kiện quan trọng trong vòng đời xử lý claim: `claim_view`, `lookup_order`, `quote` (tính từ `compute_compensation`), `refund_committed` (hoặc `policy_denied`). Các trường nhạy cảm như `parent_secret` (`CANARY_SECRET_*`), `phone`, `address`, `internal_note`, `item_name`, và `raw_headers_json` được cố ý loại bỏ ngay từ tầng đọc dữ liệu (`get_claim_view`, `lookup_order`) theo nguyên tắc allowlist để ngăn ngừa tuyệt đối rò rỉ PII và secret. Nếu trace nằm ngoài vùng scanner tự động, đội security chứng minh bằng chứng thực nghiệm: (1) Kết quả quét tự động 100% file trace sinh ra với `secret_leak_count = 0` và 0 rò rỉ PII; (2) Kết quả Crash Test Suite đạt 20/20 (`src/reports/crash.json`) chứng minh Idempotency Key `refund:{claim_id}` ngăn chặn hoàn toàn việc ghi trùng tiền; (3) Host Authorization Gate luôn đứng giữa để kiểm tra trần đơn hàng và approval hợp lệ trước khi ghi Ledger.
 

@@ -16,9 +16,13 @@ Nhóm hiểu bài toán thế nào, chia việc ra sao, thứ tự làm bốn sh
 
 ## 3. Giải pháp
 
-Mô tả ba shape nhóm viết (workflow, single, orchestrator): mỗi shape đọc gì, quyết định gì, gọi host ra sao. Chỉ rõ ranh giới code / model (tham khảo [docs/architecture.md](../../docs/architecture.md)), cách handoff được sanitize và trace ghi những event nào.
+- **Workflow** đọc claim và đơn theo các bước Python cố định. Code dùng dữ liệu đơn và policy hiện hành để tính quote. MockLLM chỉ soạn phản hồi.
+- **Single Agent** đọc claim, đơn và lịch sử hoàn tiền qua vòng ReAct giới hạn 8 bước. Agent chỉ dùng tool đọc. Sau vòng lặp, code tính lại quote từ dữ liệu đơn.
+- **Orchestrator** lấy mã claim và phạm vi chủ đơn từ dữ liệu hệ thống. `make_handoff()` tạo `handoff.v1` theo allowlist, để trống `facts` và chỉ cấp `lookup_order` cho investigator. Investigator đọc đơn theo phạm vi chủ đơn. Orchestrator tính quote bằng `compute_compensation()` từ order view. MockLLM chỉ nhận trạng thái để soạn phản hồi.
 
-...
+Cả ba shape gửi quote dương đầy đủ cho `durability.issue_refund()`. Host kiểm tra phê duyệt, áp trần theo đơn và xử lý các lần gọi lại. Shape C truyền `crash_at` đến host để bộ test kiểm tra khôi phục sau lỗi.
+
+Trace của Shape C ghi handoff đã lọc, tên tool và kết quả kiểm tra phạm vi truy cập, giá trị quote, kết quả từ host và quyết định cuối. Các nhánh kết thúc sớm cũng ghi trace qua `finish()`. Nội dung ticket, claim/order thô, header, secret và thông tin cá nhân được giữ ngoài trace.
 
 ## 4. Kết quả
 
