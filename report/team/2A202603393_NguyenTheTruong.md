@@ -94,4 +94,4 @@ hiểu, ví dụ vì sao checkpoint không thay được ledger.]
 - Sử dụng Claude Code để viết bản đầu `workflow.py` và test
 - Ban đầu gặp lỗi Python 3.10 phải nâng lên 3.12.
 
-(điền sau CP5)
+
