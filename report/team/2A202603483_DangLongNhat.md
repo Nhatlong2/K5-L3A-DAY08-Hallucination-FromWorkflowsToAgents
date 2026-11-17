@@ -19,7 +19,7 @@ TV3 phụ trách Shape C `orchestrator`, investigator chỉ đọc, handoff theo
 
 ## 4. Bằng chứng
 
-Sau khi merge Shape C, tôi chạy lại hai bộ test trong `src/` trên Windows.
+Sau khi merge Shape C, chạy lại hai bộ test trong `src/` trên Windows.
 
 | Lệnh | Ca qua | Ca bị lọc | Thời gian |
 | --- | ---: | ---: | ---: |
