@@ -5,7 +5,7 @@
 - Tên nhóm: Hallucination
 - Lớp: L3A
 - Repo nhóm: `K5-L3A-DAY08-Hallucination-FromWorkflowsToAgents`
-- URL repo, nhánh nộp, commit chốt: [Hallucination](https://github.com/Nhatlong2/K5-L3A-DAY08-Hallucination-FromWorkflowsToAgents), `main`, `680d725`.
+- URL repo, nhánh nộp, commit chốt: [Hallucination](https://github.com/Nhatlong2/K5-L3A-DAY08-Hallucination-FromWorkflowsToAgents), `main`, `7f84ceb`.
 
 ## Thành viên
 
