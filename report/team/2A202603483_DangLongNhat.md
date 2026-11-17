@@ -32,7 +32,7 @@ Sau khi merge Shape C, chạy lại hai bộ test trong `src/` trên Windows.
 
 ## 5. Công cụ AI đã dùng
 
-Codex hỗ trợ viết test và đối chiếu bằng chứng. Tôi chạy lại hai bộ test trên Windows sau merge và ghi kết quả ở mục 4.
+Codex hỗ trợ viết test và đối chiếu bằng chứng. 
 
 ## 6. Tự đánh giá
 
