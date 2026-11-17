@@ -6,7 +6,7 @@ Tối đa 5 trang ngoài phụ lục. Số liệu lấy từ file trong `src/rep
 
 - Tên nhóm: Hallucination
 - Thành viên: xem `TEAM.md`
-- Commit chốt (trùng `report/team/decision_adr.md`): `680d725`.
+- Commit chốt (trùng `report/team/decision_adr.md`): `7f84ceb`.
 
 ## 2. Mục tiêu và cách tiếp cận
 
@@ -27,7 +27,7 @@ Trace của Shape C ghi handoff đã lọc, tên tool và kết quả kiểm tra
 
 ## 4. Kết quả
 
-Bảng so sánh 4 shape lấy từ `src/reports/benchmark.json`. Chạy lại benchmark và crash suite tại `680d725` cho kết quả JSON khớp hai file đã commit.
+Bảng so sánh 4 shape lấy từ `src/reports/benchmark.json`. Chạy lại benchmark và crash suite tại `7f84ceb` cho kết quả JSON khớp hai file đã commit.
 
 ### Bảng số liệu Benchmark trên bộ Public Claims (14 claims × 5 seeds)
 
