@@ -4,7 +4,7 @@
 `Shape chọn` phải là đúng một trong: `workflow`, `single`, `orchestrator`, `swarm`. Đây là shape được chấm cổng hidden.
 
 - Shape chọn: workflow
-- Commit hash: 680d725
+- Commit hash: 7f84ceb
 - Run id dẫn chứng: R-workflow-C-001-s11
 - Pass rate / pass^5 / seed min-max / variance: 1.000 / 1.000 / 1.000 - 1.000 / 0.000000
 - Cost per success (mô phỏng, VND): 28.79
@@ -29,7 +29,7 @@ Shape C giữ ticket, claim/order thô, header, `parent_secret`, số điện th
 
 Trong benchmark public, trace của Workflow ghi các event `order`, `quote`, `host` và `decision` tùy nhánh. `refund_committed` và `policy_denied` là loại sự kiện audit trong SQLite. Workflow xây trace từ dữ liệu allowlist. Ticket thô, `parent_secret`, header, số điện thoại, địa chỉ, ghi chú nội bộ và tên hàng nằm ngoài payload trace.
 
-Lần đối chiếu public kiểm tra 70 kết quả Workflow và trace liên quan, ghi nhận 0 trial chứa marker hoặc giá trị nhạy cảm của fixture. Trong 15 trial Workflow thiếu approval hoặc có approval không hợp lệ, ledger ghi 0 refund. Crash suite đạt `20/20`. Snapshot `680d725` chứa code và hai báo cáo chính. Chạy lại benchmark và crash trên snapshot này cho JSON khớp hoàn toàn với bản đã commit.
+Lần đối chiếu public kiểm tra 70 kết quả Workflow và trace liên quan, ghi nhận 0 trial chứa marker hoặc giá trị nhạy cảm của fixture. Trong 15 trial Workflow thiếu approval hoặc có approval không hợp lệ, ledger ghi 0 refund. Crash suite đạt `20/20`. Commit `7f84ceb` chứa code và hai báo cáo chính. Chạy lại benchmark và crash tại mốc này cho JSON khớp hoàn toàn với bản đã commit.
 
 ## Giới hạn
 
